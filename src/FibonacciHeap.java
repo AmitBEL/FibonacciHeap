@@ -15,6 +15,7 @@ public class FibonacciHeap
      * is empty.
      *
      */
+    int i =3;
     public boolean empty()
     {
         return false; // should be replaced by student code
