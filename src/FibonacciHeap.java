@@ -4,7 +4,6 @@
  * An implementation of fibonacci heap over non-negative integers.
  */
 
-//AmitBEL Changes
 public class FibonacciHeap
 {
 
@@ -17,7 +16,6 @@ public class FibonacciHeap
      * is empty.
      *
      */
-    int i =3;
     public boolean empty()
     {
         return false; // should be replaced by student code
