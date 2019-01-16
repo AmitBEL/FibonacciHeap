@@ -6,6 +6,11 @@
 
 public class FibonacciHeap
 {
+    private HeapNode min = null;
+    private int marked = 0;
+    private int trees = 0;
+    private int links = 0;
+    private int cuts = 0;
 
     /**
      * public boolean empty()
@@ -157,6 +162,12 @@ public class FibonacciHeap
     public class HeapNode{
 
         public int key;
+        int rank = 0;
+        boolean mark = false;
+        HeapNode child = null;
+        HeapNode next = null;
+        HeapNode prev = null;
+        HeapNode parent = null;
 
         public HeapNode(int key) {
             this.key = key;
