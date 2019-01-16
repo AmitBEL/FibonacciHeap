@@ -4,7 +4,7 @@
  *
  * An implementation of fibonacci heap over non-negative integers.
  */
-//ricky changes
+
 public class FibonacciHeap
 {
     private HeapNode min = null;
