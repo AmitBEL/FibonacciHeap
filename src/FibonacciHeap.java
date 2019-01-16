@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 /**
  * FibonacciHeap
  *
@@ -42,6 +44,13 @@ public class FibonacciHeap
         return; // should be replaced by student code
 
     }
+    /*
+    compares the nodeToCheck.key to min.key to see if the nodeToCheck.key is the minimal
+    key of the tree, and updates accordingly.
+     */
+    private void checkNDUpdateMin(HeapNode nodeToCheck){
+
+    }
 
     /**
      * public HeapNode findMin()
@@ -64,6 +73,15 @@ public class FibonacciHeap
     {
         return; // should be replaced by student code
     }
+
+
+    /**
+     *if concateAllList is true, it concatenates the list - nodeToConnect with this,
+     *
+     *if concateAllList is false, it concatenates the single node - nodeToConnect with this
+     *
+     */
+    public void concate(HeapNode nodeToConnect, Boolean concateAllList){}
 
     /**
      * public int size()
@@ -110,6 +128,17 @@ public class FibonacciHeap
         return; // should be replaced by student code
     }
 
+    /*
+     *makes the cascading cuts in decreaseKey
+     *and updates the relevant fields
+     */
+    private void cascading(HeapNode nodeToCascade){}
+
+    /*
+     *disconnects the single node from the parent
+     */
+    private void disconnect(HeapNode nodeToDisconnect){}
+
     /**
      * public int potential()
      *
@@ -121,6 +150,15 @@ public class FibonacciHeap
     {
         return 0; // should be replaced by student code
     }
+
+
+    /*
+    makes a number of link operations which each gets as input two trees of the same rank, and generates a tree of
+     * rank bigger by one, by hanging the tree which has larger value in its root on the tree which has smaller value
+     * in its root.
+     */
+    private void successiveLinking(){}
+
 
     /**
      * public static int totalLinks()
