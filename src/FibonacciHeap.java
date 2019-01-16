@@ -50,6 +50,27 @@ public class FibonacciHeap
      */
     public void deleteMin()
     {
+        if (size==0){
+            return;
+        }
+        if (size==1){
+            min = null;
+        }
+        else {
+            HeapNode origMin = this.min;
+            if (origMin.child!=null){
+                HeapNode first = origMin.child;
+                HeapNode temp = first;
+                do {
+                    if (temp.mark){
+                        marked-=1;
+                    }
+                    temp.mark=false;
+                    temp=temp.next;
+                } while (temp!=first);
+                concate(origMin.child, true);
+            }
+        }
         return; // should be replaced by student code
 
     }
