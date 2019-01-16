@@ -1,4 +1,3 @@
-import java.util.LinkedList;
 
 /**
  * FibonacciHeap
@@ -92,7 +91,7 @@ public class FibonacciHeap
      *if concateAllList is false, it concatenates the single node - nodeToConnect with this
      *
      */
-    public void concate(HeapNode nodeToConnect, Boolean concateAllList){}
+    public void concate(HeapNode nodeToConnect, boolean concateAllList){}
 
     /**
      * public int size()
