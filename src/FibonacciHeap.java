@@ -7,6 +7,7 @@
 public class FibonacciHeap
 {
     private HeapNode min = null;
+    private int size = 0;
     private int marked = 0;
     private int trees = 0;
     private int links = 0;
@@ -23,7 +24,7 @@ public class FibonacciHeap
      */
     public boolean empty()
     {
-        return false; // should be replaced by student code
+        return min==null;
     }
 
     /**
@@ -33,7 +34,12 @@ public class FibonacciHeap
      */
     public HeapNode insert(int key)
     {
-        return new HeapNode(key); // should be replaced by student code
+        HeapNode node = new HeapNode(key);
+        this.concate(node, false);
+        this.checkNDUpdateMin(node);
+        size+=1;
+        trees+=1;
+        return node;
     }
 
     /**
