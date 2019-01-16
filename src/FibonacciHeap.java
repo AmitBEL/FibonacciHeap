@@ -34,7 +34,7 @@ public class FibonacciHeap
     public HeapNode insert(int key)
     {
         HeapNode node = new HeapNode(key);
-        this.concate(node, false);
+        this.concate(node, this.min,false);
         this.checkNDUpdateMin(node);
         size+=1;
         return node;
@@ -57,7 +57,7 @@ public class FibonacciHeap
         else {
             HeapNode origMin = this.min;
             if (origMin.child!=null){
-                this.concate(origMin.child, true);
+                this.concate(origMin.child, this.min, true);
             }
             this.min = this.min.next;
             this.disconnect(origMin);
@@ -118,10 +118,10 @@ public class FibonacciHeap
      * Meld the heap with heap2
      *
      */
-    public void meld (FibonacciHeap heapForMeld)
+    public void meld (FibonacciHeap heap2)
     {
-        this.concate(heapForMeld.min, true);
-        this.checkNDUpdateMin(heapForMeld.min);
+        this.concate(heap2.min, this.min,true);
+        this.checkNDUpdateMin(heap2.min);
         return;
     }
 
@@ -132,10 +132,10 @@ public class FibonacciHeap
      *if concateAllList is false, it concatenates the single node - nodeToConnect with this
      *
      */
-    public void concate(HeapNode nodeToConnect, boolean concateAllList){
-        HeapNode list1_first = this.min;
+    public void concate(HeapNode nodeToConnect, HeapNode listToConnect, boolean concateAllList){
+        HeapNode list1_first = listToConnect;
         HeapNode list2_first = nodeToConnect;
-        HeapNode list1_last = this.min.prev;
+        HeapNode list1_last = listToConnect.prev;
         HeapNode list2_last = concateAllList ? nodeToConnect.prev : nodeToConnect;
         list1_first.prev = list2_last;
         list2_last.next = list1_first;
@@ -162,8 +162,15 @@ public class FibonacciHeap
      */
     public int[] countersRep()
     {
-        int[] arr = new int[42];
-        return arr; //	 to be replaced by student code
+        int log = 10;//TODO log(size)
+        int[] arr = new int[log];
+        HeapNode first = this.min;
+        HeapNode temp = first;
+        do {
+            int index = temp.rank;
+            arr[index]+=1;
+        } while (temp!=first);
+        return arr;
     }
 
     /**
@@ -203,7 +210,7 @@ public class FibonacciHeap
      */
     private void cascading(HeapNode nodeToCascade){
         HeapNode parent = nodeToCascade.parent;
-        concate(disconnect(nodeToCascade),false);
+        concate(disconnect(nodeToCascade), this.min, false);
         nodeToCascade.parent = null;
         nodeToCascade.mark=false;
         this.cuts+=1;
@@ -247,12 +254,55 @@ public class FibonacciHeap
 
 
     /*
-    makes a number of link operations which each gets as input two trees of the same rank, and generates a tree of
-     * rank bigger by one, by hanging the tree which has larger value in its root on the tree which has smaller value
-     * in its root.
+     * makes a number of link operations which each gets as input two trees of the same rank,
+     * and generates a tree of rank bigger by one,
+     * by hanging the tree which has larger value in its root
+     * on the tree which has smaller value in its root
      */
     private void successiveLinking(){
+        int log = 10;//TODO log(size)
+        HeapNode[] buckets = new HeapNode[log];
+        for (int i=0; i<log; i++){
+            buckets[i]=null;
+        }
+        HeapNode first = this.min;
+        HeapNode curr = first;
+        do {
+            int i = curr.rank;
+            HeapNode temp = curr; //did it because curr may not stay at the roots list
+            curr = curr.next;
+            if (buckets[i]==null){
+                buckets[i]=temp;
+            }
+            else {
+                link(temp, buckets[i]);
+                buckets[i]=null;
+            }
+        } while (curr!=first);
+    }
 
+    /*
+     * link two nodes with the same rank
+     * the new root is the node with the smaller key
+     * return the new root node
+     */
+    private HeapNode link(HeapNode node1, HeapNode node2){
+        HeapNode bigger = node1;
+        HeapNode smaller = node2;
+        if (node1.getKey()<node2.getKey()){ //check which node will be the root (the smaller)
+           bigger = node2;
+           smaller = node1;
+        }
+        disconnect(bigger); //disconnects the bigger from the roots list
+        bigger.parent=smaller;
+        if (smaller.child==null){
+            smaller.child=bigger;
+        }
+        else {
+            concate(bigger, smaller.child, false); //join the node to the child list
+        }
+        links+=1;
+        return smaller; //return the root
     }
 
 
