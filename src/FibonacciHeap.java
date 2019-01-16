@@ -1,18 +1,16 @@
-
 /**
  * FibonacciHeap
  *
  * An implementation of fibonacci heap over non-negative integers.
  */
-//ricky changes
+
 public class FibonacciHeap
 {
     private HeapNode min = null;
     private int size = 0;
     private int marked = 0;
-    private int trees = 0;
-    private int links = 0;
-    private int cuts = 0;
+    static int links = 0;
+    static int cuts = 0;
 
     /**
      * public boolean empty()
@@ -39,7 +37,6 @@ public class FibonacciHeap
         this.concate(node, false);
         this.checkNDUpdateMin(node);
         size+=1;
-        trees+=1;
         return node;
     }
 
@@ -60,27 +57,48 @@ public class FibonacciHeap
         else {
             HeapNode origMin = this.min;
             if (origMin.child!=null){
-                HeapNode first = origMin.child;
-                HeapNode temp = first;
-                do {
-                    if (temp.mark){
-                        marked-=1;
-                    }
-                    temp.mark=false;
-                    temp=temp.next;
-                } while (temp!=first);
-                concate(origMin.child, true);
+                this.concate(origMin.child, true);
             }
+            this.min = this.min.next;
+            this.disconnect(origMin);
+            HeapNode first = this.min;
+            HeapNode temp = first;
+            do {
+                if (temp.mark){
+                    marked-=1;
+                }
+                temp.mark=false;
+                checkNDUpdateMin(temp);
+                temp.parent = null;
+                temp=temp.next;
+            } while (temp!=first);
+            this.successiveLinking();
         }
-        return; // should be replaced by student code
+        this.size-=1;
+        return;
+    }
 
+
+    private int numOfTrees(){
+        int count = 0;
+        HeapNode first = this.min;
+        HeapNode temp = first;
+        if (!empty()){
+            do {
+                count+=1;
+                temp=temp.next;
+            } while (temp!=first);
+        }
+        return count;
     }
     /*
     compares the nodeToCheck.key to min.key to see if the nodeToCheck.key is the minimal
     key of the tree, and updates accordingly.
      */
     private void checkNDUpdateMin(HeapNode nodeToCheck){
-
+        if (this.min.getKey()>nodeToCheck.getKey()){
+            this.min = nodeToCheck;
+        }
     }
 
     /**
@@ -91,7 +109,7 @@ public class FibonacciHeap
      */
     public HeapNode findMin()
     {
-        return new HeapNode(0);// should be replaced by student code
+        return this.min;
     }
 
     /**
@@ -100,9 +118,11 @@ public class FibonacciHeap
      * Meld the heap with heap2
      *
      */
-    public void meld (FibonacciHeap heap2)
+    public void meld (FibonacciHeap heapForMeld)
     {
-        return; // should be replaced by student code
+        this.concate(heapForMeld.min, true);
+        this.checkNDUpdateMin(heapForMeld.min);
+        return;
     }
 
 
@@ -112,7 +132,16 @@ public class FibonacciHeap
      *if concateAllList is false, it concatenates the single node - nodeToConnect with this
      *
      */
-    public void concate(HeapNode nodeToConnect, boolean concateAllList){}
+    public void concate(HeapNode nodeToConnect, boolean concateAllList){
+        HeapNode list1_first = this.min;
+        HeapNode list2_first = nodeToConnect;
+        HeapNode list1_last = this.min.prev;
+        HeapNode list2_last = concateAllList ? nodeToConnect.prev : nodeToConnect;
+        list1_first.prev = list2_last;
+        list2_last.next = list1_first;
+        list2_first.prev = list1_last;
+        list1_last.next = list2_first;
+    }
 
     /**
      * public int size()
@@ -122,7 +151,7 @@ public class FibonacciHeap
      */
     public int size()
     {
-        return 0; // should be replaced by student code
+        return this.size;
     }
 
     /**
@@ -145,7 +174,9 @@ public class FibonacciHeap
      */
     public void delete(HeapNode x)
     {
-        return; // should be replaced by student code
+        decreaseKey(x,(1+x.getKey()-min.getKey()));
+        deleteMin();
+        return;
     }
 
     /**
@@ -156,19 +187,50 @@ public class FibonacciHeap
      */
     public void decreaseKey(HeapNode x, int delta)
     {
-        return; // should be replaced by student code
+        x.key-=delta;
+        if (x.parent!=null){
+            if (x.getKey()<x.parent.getKey()){
+                cascading(x);
+            }
+        }
+        checkNDUpdateMin(x);
+        return;
     }
 
     /*
      *makes the cascading cuts in decreaseKey
      *and updates the relevant fields
      */
-    private void cascading(HeapNode nodeToCascade){}
+    private void cascading(HeapNode nodeToCascade){
+        HeapNode parent = nodeToCascade.parent;
+        concate(disconnect(nodeToCascade),false);
+        nodeToCascade.parent = null;
+        nodeToCascade.mark=false;
+        this.cuts+=1;
+        this.marked-=1;
+        if(parent.parent!=null) {
+            if (parent.mark){
+                cascading(parent);
+            }
+            else {
+                parent.mark=true;
+                parent.rank-=1;
+                this.marked+=1;
+            }
+        }
+    }
 
     /*
-     *disconnects the single node from the parent
+     *disconnects the single node from his linkedList
+     *
      */
-    private void disconnect(HeapNode nodeToDisconnect){}
+    private HeapNode disconnect(HeapNode nodeToDisconnect){
+        HeapNode prevNode = nodeToDisconnect.prev;
+        HeapNode nextNode = nodeToDisconnect.next;
+        prevNode.next = nextNode;
+        nextNode.prev = prevNode;
+        return nodeToDisconnect;
+    }
 
     /**
      * public int potential()
@@ -179,7 +241,8 @@ public class FibonacciHeap
      */
     public int potential()
     {
-        return 0; // should be replaced by student code
+        int trees = this.numOfTrees();
+        return (trees+2*marked);
     }
 
 
@@ -188,7 +251,9 @@ public class FibonacciHeap
      * rank bigger by one, by hanging the tree which has larger value in its root on the tree which has smaller value
      * in its root.
      */
-    private void successiveLinking(){}
+    private void successiveLinking(){
+
+    }
 
 
     /**
@@ -201,7 +266,7 @@ public class FibonacciHeap
      */
     public static int totalLinks()
     {
-        return 0; // should be replaced by student code
+        return links;
     }
 
     /**
@@ -212,7 +277,7 @@ public class FibonacciHeap
      */
     public static int totalCuts()
     {
-        return 0; // should be replaced by student code
+        return cuts;
     }
 
     /**
