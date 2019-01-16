@@ -8,6 +8,12 @@ import java.util.LinkedList;
 
 public class FibonacciHeap
 {
+    private HeapNode min = null;
+    private int size = 0;
+    private int marked = 0;
+    private int trees = 0;
+    private int links = 0;
+    private int cuts = 0;
 
     /**
      * public boolean empty()
@@ -20,7 +26,7 @@ public class FibonacciHeap
      */
     public boolean empty()
     {
-        return false; // should be replaced by student code
+        return min==null;
     }
 
     /**
@@ -30,7 +36,12 @@ public class FibonacciHeap
      */
     public HeapNode insert(int key)
     {
-        return new HeapNode(key); // should be replaced by student code
+        HeapNode node = new HeapNode(key);
+        this.concate(node, false);
+        this.checkNDUpdateMin(node);
+        size+=1;
+        trees+=1;
+        return node;
     }
 
     /**
@@ -195,6 +206,12 @@ public class FibonacciHeap
     public class HeapNode{
 
         public int key;
+        int rank = 0;
+        boolean mark = false;
+        HeapNode child = null;
+        HeapNode next = null;
+        HeapNode prev = null;
+        HeapNode parent = null;
 
         public HeapNode(int key) {
             this.key = key;
