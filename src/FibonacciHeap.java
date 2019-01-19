@@ -1,3 +1,4 @@
+
 /**
  * FibonacciHeap
  *
@@ -34,7 +35,10 @@ public class FibonacciHeap
     public HeapNode insert(int key)
     {
         HeapNode node = new HeapNode(key);
-        this.concate(node, this.min,false);
+        if (!empty()){
+            this.concate(node, this.min,false);}
+        else{
+            this.min=node;}
         this.checkNDUpdateMin(node);
         size+=1;
         return node;
@@ -162,14 +166,22 @@ public class FibonacciHeap
      */
     public int[] countersRep()
     {
-        int log = 10;//TODO log(size)
-        int[] arr = new int[log];
-        HeapNode first = this.min;
-        HeapNode temp = first;
+        int arrSize=0;
+        HeapNode nextNode = this.min;
+        do{
+            if(arrSize<nextNode.rank){
+                arrSize = nextNode.rank;
+                nextNode = nextNode.next;
+            }}
+        while (nextNode!=this.min);
+
+        int[] arr = new int[arrSize+1];
+        HeapNode temp = this.min;
         do {
             int index = temp.rank;
             arr[index]+=1;
-        } while (temp!=first);
+            temp = temp.next;
+        } while (temp!=this.min);
         return arr;
     }
 
@@ -260,7 +272,7 @@ public class FibonacciHeap
      * on the tree which has smaller value in its root
      */
     private void successiveLinking(){
-        int log = 10;//TODO log(size)
+        int log =(int) Math.log(size);
         HeapNode[] buckets = new HeapNode[log];
         for (int i=0; i<log; i++){
             buckets[i]=null;
@@ -290,8 +302,8 @@ public class FibonacciHeap
         HeapNode bigger = node1;
         HeapNode smaller = node2;
         if (node1.getKey()<node2.getKey()){ //check which node will be the root (the smaller)
-           bigger = node2;
-           smaller = node1;
+            bigger = node2;
+            smaller = node1;
         }
         disconnect(bigger); //disconnects the bigger from the roots list
         bigger.parent=smaller;
@@ -344,8 +356,8 @@ public class FibonacciHeap
         int rank = 0;
         boolean mark = false;
         HeapNode child = null;
-        HeapNode next = null;
-        HeapNode prev = null;
+        HeapNode next = this;
+        HeapNode prev = this;
         HeapNode parent = null;
 
         public HeapNode(int key) {
