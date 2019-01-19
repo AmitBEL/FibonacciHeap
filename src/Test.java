@@ -17,35 +17,152 @@ public class Test {
         grade = 80.0;
         testScore = grade / 29;
 
-        try {test0();} catch (Exception e){bugFound("test0");}
-        try {test1();} catch (Exception e){bugFound("test1");}
-        try {test2();} catch (Exception e){bugFound("test2");}
-        try {test3();} catch (Exception e){bugFound("test3");}
-        try {test4();} catch (Exception e){bugFound("test4");}
-        try {test5();} catch (Exception e){bugFound("test5");}
-        try {test6();} catch (Exception e){bugFound("test6");}
-        try {test7();} catch (Exception e){bugFound("test7");}
-        try {test8();} catch (Exception e){bugFound("test8");}
-        try {test9();} catch (Exception e){bugFound("test9");}
-        try {test10();} catch (Exception e){bugFound("test10");}
-        try {test11();} catch (Exception e){bugFound("test11");}
-        try {test12();} catch (Exception e){bugFound("test12");}
-        try {test13();} catch (Exception e){bugFound("test13");}
-        try {test14();} catch (Exception e){bugFound("test14");}
-        try {test15();} catch (Exception e){bugFound("test15");}
-        try {test16();} catch (Exception e){bugFound("test16");}
-        try {test17();} catch (Exception e){bugFound("test17");}
-        try {test18();} catch (Exception e){bugFound("test18");}
-        try {test19();} catch (Exception e){bugFound("test19");}
-        try {test20();} catch (Exception e){bugFound("test20");}
-        try {test21();} catch (Exception e){bugFound("test21");}
-        try {test22();} catch (Exception e){bugFound("test22");}
-        try {test23();} catch (Exception e){bugFound("test23");}
-        try {test24();} catch (Exception e){bugFound("test24");}
-        try {test25();} catch (Exception e){bugFound("test25");}
-        try {test26();} catch (Exception e){bugFound("test26");}
-        try {test27();} catch (Exception e){bugFound("test27");}
-        try {test28();} catch (Exception e){bugFound("test28");}
+        try {
+            test0();
+        } catch (Exception e) {
+            bugFound("test0");
+        }
+        try {
+            test1();
+        } catch (Exception e) {
+            bugFound("test1");
+        }
+        try {
+            test2();
+        } catch (Exception e) {
+            bugFound("test2");
+        }
+        try {
+            test3();
+        } catch (Exception e) {
+            bugFound("test3");
+        }
+        try {
+            test4();
+        } catch (Exception e) {
+            bugFound("test4");
+        }
+        try {
+            test5();
+        } catch (Exception e) {
+            bugFound("test5");
+        }
+
+        try {
+            test6();
+        } catch (Exception e) {
+            bugFound("test6");
+        }
+        try {
+            test7();
+        } catch (Exception e) {
+            bugFound("test7");
+        }
+        try {
+            test8();
+        } catch (Exception e) {
+            bugFound("test8");
+        }
+        try {
+            test9();
+        } catch (Exception e) {
+            bugFound("test9");
+        }
+        try {
+            test10();
+        } catch (Exception e) {
+            bugFound("test10");
+        }
+        try {
+            test11();
+        } catch (Exception e) {
+            bugFound("test11");
+        }
+        try {
+            test12();
+        } catch (Exception e) {
+            bugFound("test12");
+        }
+        try {
+            test13();
+        } catch (Exception e) {
+            bugFound("test13");
+        }
+        try {
+            test14();
+        } catch (Exception e) {
+            bugFound("test14");
+        }
+        try {
+            test15();
+        } catch (Exception e) {
+            bugFound("test15");
+        }
+        try {
+            test16();
+        } catch (Exception e) {
+            bugFound("test16");
+        }
+        try {
+            test17();
+        } catch (Exception e) {
+            bugFound("test17");
+        }
+        try {
+            test18();
+        } catch (Exception e) {
+            bugFound("test18");
+        }
+        try {
+            test19();
+        } catch (Exception e) {
+            bugFound("test19");
+        }
+        try {
+            test20();
+        } catch (Exception e) {
+            bugFound("test20");
+        }
+        try {
+            test21();
+        } catch (Exception e) {
+            bugFound("test21");
+        }
+        try {
+            test22();
+        } catch (Exception e) {
+            bugFound("test22");
+        }
+        try {
+            test23();
+        } catch (Exception e) {
+            bugFound("test23");
+        }
+        try {
+            test24();
+        } catch (Exception e) {
+            bugFound("test24");
+        }
+        try {
+            test25();
+        } catch (Exception e) {
+            bugFound("test25");
+        }
+        try {
+            test26();
+        } catch (Exception e) {
+            bugFound("test26");
+        }
+        try {
+            test27();
+        } catch (Exception e) {
+            bugFound("test27");
+        }
+        try {
+            test28();
+        } catch (Exception e) {
+            bugFound("test28");
+        }
 
         System.out.println(grade);
     }
@@ -170,11 +287,15 @@ public class Test {
 
         for (int i = 0; i < 1000; i++) {
             for (int j = 0; j < 3; j++) {
+
+
                 if (i != fibonacciHeap.findMin().getKey()) {
                     bugFound(test);
                     return;
                 }
+
                 fibonacciHeap.deleteMin();
+
             }
         }
         if (!fibonacciHeap.empty())
@@ -382,7 +503,7 @@ public class Test {
         fibonacciHeap.decreaseKey(h, 4000);
 
 
-        for (int i = 0; i < 2; i ++) {
+        for (int i = 0; i < 2; i++) {
 
             if (1000 != fibonacciHeap.findMin().getKey()) {
                 bugFound(test);
@@ -458,7 +579,6 @@ public class Test {
         if (!fibonacciHeap.empty())
             bugFound(test);
     }
-
 
     static void test15() {
         String test = "test15";
@@ -591,7 +711,6 @@ public class Test {
         fibonacciHeap = new FibonacciHeap();
 
 
-
         fibonacciHeap.insert(4);
         FibonacciHeap.HeapNode node5 = fibonacciHeap.insert(5);
         FibonacciHeap.HeapNode node6 = fibonacciHeap.insert(6);
@@ -623,7 +742,7 @@ public class Test {
 
         int treeSize = 32768;
         int sizeToDelete = 1000;
-
+        int potential;
 
         ArrayList<FibonacciHeap.HeapNode> nodes = new ArrayList<>();
 
@@ -639,8 +758,9 @@ public class Test {
             fibonacciHeap.deleteMin();
         }
 
-        if (fibonacciHeap.potential() != 1)
+        if (fibonacciHeap.potential() != 1) {
             bugFound(test);
+        }
     }
 
     static void test22() {
@@ -676,7 +796,7 @@ public class Test {
 
         Collections.shuffle(nodes);
 
-        for (int i = 0; i < treeSize; i ++) {
+        for (int i = 0; i < treeSize; i++) {
             iterationCuts = FibonacciHeap.totalCuts();
 
             fibonacciHeap.decreaseKey(nodes.get(i), nodes.get(i).getKey() - (treeSize - i));
@@ -769,7 +889,7 @@ public class Test {
 
         if (fibonacciHeap.potential() > 100 ||
                 FibonacciHeap.totalCuts() - totalCuts != 0 ||
-                FibonacciHeap.totalLinks() - links  < size - 100)
+                FibonacciHeap.totalLinks() - links < size - 100)
             bugFound(test);
     }
 
@@ -795,7 +915,7 @@ public class Test {
 
         if (fibonacciHeap.potential() > 100 ||
                 FibonacciHeap.totalCuts() - totalCuts != 0 ||
-                FibonacciHeap.totalLinks() - links  < size - 100)
+                FibonacciHeap.totalLinks() - links < size - 100)
             bugFound(test);
     }
 
@@ -821,11 +941,11 @@ public class Test {
 
         if (fibonacciHeap.potential() > 100 ||
                 FibonacciHeap.totalCuts() - totalCuts != 0 ||
-                FibonacciHeap.totalLinks() - links  < size - 100)
+                FibonacciHeap.totalLinks() - links < size - 100)
             bugFound(test);
     }
 
-    static void bugFound (String test) {
+    static void bugFound(String test) {
         System.out.println("Bug found in " + test);
         grade -= testScore;
     }
