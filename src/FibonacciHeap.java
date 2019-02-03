@@ -78,19 +78,9 @@ public class FibonacciHeap {
 
     }
 
-    public String printRoots() { //TODO delete this
-        HeapNode first = this.min;
-        HeapNode temp = first;
-        StringBuilder roots = new StringBuilder("[");
-        do {
-            roots.append(temp.getKey() + ",");
-            temp = temp.next;
-        } while (temp != first);
-        roots.append("]");
-        System.out.print(roots);
-        return roots.toString();
-    }
-
+    /*
+    counts the number of trees in the heap
+     */
     private int numOfTrees() {
         int count = 0;
         HeapNode first = this.min;
@@ -246,7 +236,6 @@ public class FibonacciHeap {
 
     /*
      *disconnects the single node from his linkedList
-     *
      */
     private HeapNode disconnect(HeapNode nodeToDisconnect) {
         HeapNode parent = nodeToDisconnect.parent;
@@ -290,6 +279,7 @@ public class FibonacciHeap {
      * and generates a tree of rank bigger by one,
      * by hanging the tree which has larger value in its root
      * on the tree which has smaller value in its root
+     * Successive Linking - One Pass
      */
     private void successiveLinking() {
         int log = (int) (Math.log(size) / Math.log(2));
@@ -303,7 +293,6 @@ public class FibonacciHeap {
 
             HeapNode temp = curr; //did it because curr may not stay at the roots list
             curr = curr.next;
-            //toBuckets(temp, buckets);
             int i = temp.rank;
             if (buckets[i] == null) {
                 buckets[i] = temp;
@@ -312,17 +301,6 @@ public class FibonacciHeap {
                 buckets[i] = null;
             }
         } while (curr != first);
-    }
-
-    private void toBuckets(HeapNode node, HeapNode[] buckets) {
-        int i = node.rank;
-        if (buckets[i] == null) {
-            buckets[i] = node;
-        } else {
-            HeapNode linked = link(node, buckets[i]);
-            buckets[i] = null;
-            toBuckets(linked, buckets);
-        }
     }
 
     /*
