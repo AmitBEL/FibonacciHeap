@@ -805,6 +805,8 @@ public class Test {
                 noCascading = false;
         }
 
+
+
         if (fibonacciHeap.potential() != treeSize ||
                 FibonacciHeap.totalCuts() - totalCuts != treeSize - 1 ||
                 FibonacciHeap.totalLinks() - links != 0 ||

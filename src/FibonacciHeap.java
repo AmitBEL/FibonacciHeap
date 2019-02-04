@@ -257,7 +257,7 @@ public class FibonacciHeap {
             parent.rank -= 1;
             if (parent.child == nodeToDisconnect) {
                 parent.child = nodeToDisconnect.next;
-                if (nodeToDisconnect.next == nodeToDisconnect) {
+                if (nodeToDisconnect.next == nodeToDisconnect) {//single node
                     parent.child = null;
                 }
             }
